@@ -15,12 +15,13 @@ const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))
 export default () => {
   ReactDOM.render(
     <Provider store={store}>
-      <Router>
+      {/* <Router>
         <Switch>
           <Route path="/" exact component={App} />
           <Route component={PageNotFound} />
         </Switch>
-      </Router>
+      </Router> */}
+      <App />
     </Provider>,
     document.getElementById('root')
   );

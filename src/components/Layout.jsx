@@ -1,12 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import ApplicationBar from './ApplicationBar';
 import Sidebar from './Sidebar';
-import Main from './Main';
-import AboutUs from './AboutUs';
-import PageNotFound from './PageNotFound';
 
 const styles = () => ({
   root: {
@@ -15,20 +11,12 @@ const styles = () => ({
 });
 
 const Layout = props => {
-  const { classes } = props;
+  const { classes, children } = props;
   return (
     <div className={classes.root}>
-      <Router>
-        <Switch>
-          <>
-            <ApplicationBar />
-            <Sidebar />
-            <Route path="/" exact component={Main} />
-            <Route path="/about" component={AboutUs} />
-          </>
-          <Route component={PageNotFound} />
-        </Switch>
-      </Router>
+      <ApplicationBar />
+      <Sidebar />
+      {children}
     </div>
   );
 };

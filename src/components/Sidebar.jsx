@@ -9,8 +9,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import HelpIcon from '@material-ui/icons/Help';
+import Link from '@material-ui/core/Link';
 import Settings from '@material-ui/icons/Settings';
 import Computer from '@material-ui/icons/Computer';
+import { Link as RouterLink } from 'react-router-dom';
 import { sidebarWidth } from '../constants';
 
 const styles = theme => ({
@@ -26,6 +28,16 @@ const styles = theme => ({
   },
 });
 
+const CustomItem = props => {
+  const { to, text, children } = props;
+  return (
+    <ListItem button component={RouterLink} to={to}>
+      <ListItemIcon>{children}</ListItemIcon>
+      <ListItemText primary={text} />
+    </ListItem>
+  );
+};
+
 class Sidebar extends React.Component {
   handleDrawerToggle() {
     // setMobileOpen(!mobileOpen);
@@ -33,39 +45,26 @@ class Sidebar extends React.Component {
 
   renderDrawer() {
     const { classes } = this.props;
-
     return (
       <div>
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <Computer />
-            </ListItemIcon>
-            <ListItemText primary="Главная" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <HelpIcon />
-            </ListItemIcon>
-            <ListItemText primary="Помощь" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary="О нас" />
-          </ListItem>
+          <CustomItem text="Главная" to="/">
+            <Computer />
+          </CustomItem>
+          <CustomItem text="Помощь" to="/help">
+            <HelpIcon />
+          </CustomItem>
+          <CustomItem text="О нас" to="/about">
+            <MailIcon />
+          </CustomItem>
         </List>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Настройки" />
-          </ListItem>
+          <CustomItem text="Настройки" to="/settings">
+            <Settings />
+          </CustomItem>
         </List>
       </div>
     );

@@ -9,7 +9,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import HelpIcon from '@material-ui/icons/Help';
-import Link from '@material-ui/core/Link';
 import Settings from '@material-ui/icons/Settings';
 import Computer from '@material-ui/icons/Computer';
 import { Link as RouterLink } from 'react-router-dom';

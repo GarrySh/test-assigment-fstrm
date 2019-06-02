@@ -2,19 +2,23 @@ import React from 'react';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-});
+const styles = theme => {
+  return {
+    toolbar: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }
+};
 
 const Help = ({ classes }) => {
   return (
     <main className={classes.content}>
       <div className={classes.toolbar} />
-      <h1>Help</h1>
+      <Typography paragraph variant="h4" component="h1">
+          Help
+      </Typography>
       <Typography paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
-import {  Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Link from '@material-ui/core/Link';
@@ -9,10 +8,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
-import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from 'material-ui-flat-pagination';
 import * as actions from '../actions';
+import InputsPanel from './InputsPanel';
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -37,18 +36,15 @@ const styles = theme => ({
     width: '300px',
     flex: '0 0 200px',
   },
-  textField: {
-    margin: theme.spacing(1, 1, 0, 0),
-    width: 200,
-  },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  const currentPage = ownProps.match.params.id || 1;
   return {
     articles: state.articles,
     articlesFetchingState: state.articlesFetchingState,
     articlesOnPage: state.pages.articlesOnPage,
-    currentPage: state.pages.current,
+    currentPage,
     totalArticles: state.pages.totalArticles,
     filterDate: state.UIState.filterDate,
   };
@@ -62,23 +58,25 @@ const actionCreators = {
 
 class Articles extends React.Component {
   componentDidMount() {
+    console.log('component did mount');
     this.fetchArticles();
   }
 
-  fetchArticles = () => {
-    const { fetchArticles, articlesOnPage, filterDate } = this.props;
-    fetchArticles(2, articlesOnPage, filterDate);
-  };
+  componentDidUpdate() {
+    console.log('component did update');
+    // this.fetchArticles();
+  }
 
-  handleDateChange = async event => {
-    const { changeFilterDate } = this.props;
-    const filterDate = event.target.value;
-    await changeFilterDate({ filterDate });
+  fetchArticles = () => {
+    const { fetchArticles, articlesOnPage, filterDate, currentPage } = this.props;
+    fetchArticles(currentPage, articlesOnPage, filterDate);
   };
 
   handlePaginationChange = (event, offset, page) => {
-    const { changePage } = this.props;
+    const { changePage, history } = this.props;
+    console.log('this props', this.props);
     changePage({ page });
+    history.push(`/articles/${page}`);
   };
 
   renderProgressBar = () => {
@@ -91,22 +89,10 @@ class Articles extends React.Component {
   };
 
   renderArticles = () => {
-    const { classes, articles, filterDate, currentPage, totalArticles, articlesOnPage } = this.props;
+    const { classes, articles, currentPage, totalArticles, articlesOnPage } = this.props;
     return (
       <div>
-        <form className={classes.container} noValidate>
-          <TextField
-            id="date"
-            label="Фильтр по дате"
-            type="date"
-            value={filterDate}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={this.handleDateChange}
-          />
-        </form>
+        <InputsPanel />
         {articles.map(article => {
           const { title, description, urlToImage, publishedAt, source } = article;
           const articleDate = publishedAt;

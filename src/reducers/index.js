@@ -16,9 +16,7 @@ const articlesFetchingState = handleActions({
 
 const articles = handleActions({
   [actions.fetchArticlesSuccess](state, { payload }) {
-    const { articles: newArticles, totalResults } = payload;
-    console.log({totalResults})
-    return [...newArticles]
+    return [...payload.articles];
   }
 }, []);
 

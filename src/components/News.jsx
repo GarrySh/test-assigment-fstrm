@@ -8,7 +8,6 @@ import Pagination from 'material-ui-flat-pagination';
 import * as actions from '../actions';
 import InputsPanel from './InputsPanel';
 import Articles from './Articles';
-import { articlesSelector } from '../selectors';
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -30,7 +29,7 @@ const Main = ({ classes, children }) => (
 const mapStateToProps = (state, ownProps) => {
   const currentPage = ownProps.match.params.id || 1;
   return {
-    articles: articlesSelector(state),
+    articles: state.articles,
     articlesFetchingState: state.articlesFetchingState,
     articlesOnPage: state.pages.articlesOnPage,
     currentPage,
@@ -51,26 +50,15 @@ class News extends React.Component {
     this.fetchArticles();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('nextProps', nextProps)
-    return true;
-  }
-
-  componentDidUpdate() {
-    console.log('component did update');
-    // this.fetchArticles();
-  }
-
   fetchArticles = () => {
     const { fetchArticles, articlesOnPage, filterDate, currentPage } = this.props;
     fetchArticles(currentPage, articlesOnPage, filterDate);
   };
 
   handlePaginationChange = (event, offset, page) => {
-    const { changePage, history } = this.props;
-    console.log('this props', this.props);
-    changePage({ page });
+    const { history } = this.props;
     history.push(`/articles/${page}`);
+    this.fetchArticles();
   };
 
   render() {

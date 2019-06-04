@@ -25,11 +25,6 @@ const styles = theme => ({
 });
 
 class ApplicationBar extends React.Component {
-
-  handleDrawerToggle() {
-    // setMobileOpen(!mobileOpen);
-  }
-
   render() {
     const { classes } = this.props;
     return (

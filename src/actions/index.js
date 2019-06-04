@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAction } from 'redux-actions';
+import { uniqueId } from 'lodash';
 import routes from '../routes';
 
 export const changeTheme = createAction('THEME_CHANGE');
@@ -11,6 +12,12 @@ export const fetchArticlesRequest = createAction('ARTICLES_FETCH_REQUEST');
 export const fetchArticlesSuccess = createAction('ARTICLES_FETCH_SUCCESS');
 export const fetchArticlesFailure = createAction('ARTICLES_FETCH_FAILURE');
 
+const prepareArticles = articles =>
+  articles.map(article => {
+    const date = new Date(article.publishedAt).toLocaleString('ru');
+    return { ...article, id: uniqueId(), date };
+  });
+
 export const fetchArticles = (page, pageSize, date) => async dispatch => {
   dispatch(fetchArticlesRequest());
   try {
@@ -18,7 +25,7 @@ export const fetchArticles = (page, pageSize, date) => async dispatch => {
     const response = await axios.get(url, { params: { page, pageSize, from: date, to: date } });
     const { status, articles, totalResults } = response.data;
     if (status === 'ok') {
-      dispatch(fetchArticlesSuccess({ articles, totalResults }));
+      dispatch(fetchArticlesSuccess({ articles: prepareArticles(articles), totalResults }));
     } else {
       dispatch(fetchArticlesFailure());
     }

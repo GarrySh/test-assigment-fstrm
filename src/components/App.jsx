@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import Layout from './Layout';
 import AboutUs from './AboutUs';
@@ -22,11 +22,14 @@ const App = ({ fontSize, currentTheme }) => {
     <Router>
       <ThemeProvider theme={theme}>
         <Layout>
-          <Route exact path="/" component={News} />
-          <Route path="/articles/:id" component={News} />
-          <Route path="/about" component={AboutUs} />
-          <Route path="/help" component={Help} />
-          <Route path="/settings" component={Settings} />
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/articles/1" />} />
+            <Route path="/articles/:id" component={News} />
+            <Route path="/about" component={AboutUs} />
+            <Route path="/help" component={Help} />
+            <Route path="/settings" component={Settings} />
+            <Route render={() => <h1>Not found</h1>} />
+          </Switch>
         </Layout>
       </ThemeProvider>
     </Router>

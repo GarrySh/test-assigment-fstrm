@@ -29,9 +29,9 @@ const Articles = props => {
   const { classes, articles } = props;
 
   return articles.map(article => {
-    const { title, description, urlToImage, publishedAt, source } = article;
+    const { title, description, urlToImage, date, source } = article;
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} key={article.id}>
         <CardMedia className={classes.cover} image={urlToImage} title="Article image" />
         <div className={classes.details}>
           <CardContent className={classes.cardContent}>
@@ -41,7 +41,7 @@ const Articles = props => {
             <Typography variant="subtitle1" color="textSecondary">
               {description}
             </Typography>
-            <Chip label={publishedAt} className={classes.chip} />
+            <Chip label={date} className={classes.chip} />
             <Chip label={source.name} className={classes.chip} />
           </CardContent>
         </div>

@@ -24,13 +24,15 @@ const actionCreators = {
 
 class InputsPanel extends React.Component {
   handleDateChange = async event => {
-    const { changeFilterDate } = this.props;
+    const { changeFilterDate, onDateChange } = this.props;
     const filterDate = event.target.value;
     await changeFilterDate({ filterDate });
+    onDateChange();
   };
 
   render() {
     const { classes, filterDate } = this.props;
+
     return (
       <form className={classes.form} noValidate>
         <TextField

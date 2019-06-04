@@ -43,7 +43,7 @@ const pages = handleActions(
       };
     },
   },
-  { totalArticles: 0, articlesOnPage: 2 }
+  { totalArticles: 0, articlesOnPage: 5 }
 );
 
 const UIState = handleActions(

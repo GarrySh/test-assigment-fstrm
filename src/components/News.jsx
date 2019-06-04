@@ -40,24 +40,21 @@ const mapStateToProps = (state, ownProps) => {
 
 const actionCreators = {
   fetchArticles: actions.fetchArticles,
-  changeFilterDate: actions.changeFilterDate,
-  changePage: actions.changePage,
 };
 
 class News extends React.Component {
   componentDidMount() {
-    console.log('component did mount');
     this.fetchArticles();
   }
 
-  fetchArticles = () => {
+  fetchArticles = async () => {
     const { fetchArticles, articlesOnPage, filterDate, currentPage } = this.props;
-    fetchArticles(currentPage, articlesOnPage, filterDate);
+    await fetchArticles(currentPage, articlesOnPage, filterDate);
   };
 
-  handlePaginationChange = (event, offset, page) => {
+  handlePaginationChange = async (event, offset, page) => {
     const { history } = this.props;
-    history.push(`/articles/${page}`);
+    await history.push(`/articles/${page}`);
     this.fetchArticles();
   };
 
@@ -83,7 +80,7 @@ class News extends React.Component {
     if (articlesFetchingState === 'success') {
       return (
         <Main classes={classes}>
-          <InputsPanel />
+          <InputsPanel onDateChange={this.fetchArticles} />
           <Articles articles={articles} />
           <Pagination
             limit={articlesOnPage}

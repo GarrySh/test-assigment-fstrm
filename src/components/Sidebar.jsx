@@ -38,10 +38,6 @@ const CustomItem = props => {
 };
 
 class Sidebar extends React.Component {
-  handleDrawerToggle() {
-    // setMobileOpen(!mobileOpen);
-  }
-
   renderDrawer() {
     const { classes } = this.props;
     return (

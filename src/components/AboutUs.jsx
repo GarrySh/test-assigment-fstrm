@@ -1,16 +1,21 @@
+import 'leaflet/dist/leaflet.css';
+
+import L from 'leaflet';
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import marker from 'leaflet/dist/images/marker-icon.png';
+import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
+// eslint-disable-next-line no-underscore-dangle
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: marker2x,
+  iconUrl: marker,
+  shadowUrl: markerShadow,
 });
 
 const styles = theme => ({

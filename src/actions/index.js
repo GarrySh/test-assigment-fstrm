@@ -5,7 +5,6 @@ import routes from '../routes';
 export const changeTheme = createAction('THEME_CHANGE');
 export const changeFontSize = createAction('FONT_SIZE_CHANGE');
 export const changeFilterDate = createAction('FILTER_DATE_CHANGE');
-export const changePage = createAction('PAGE_CHANGE')
 export const changeArticlesCountOnPage = createAction('ARTICLES_COUNT_ON_PAGE_CHANGE');
 
 export const fetchArticlesRequest = createAction('ARTICLES_FETCH_REQUEST');

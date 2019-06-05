@@ -1,1 +1,3 @@
-export const sidebarWidth = 240;
+export default {
+  sidebarWidth: 240,
+};

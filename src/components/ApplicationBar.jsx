@@ -5,28 +5,45 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
-
-import { sidebarWidth } from '../constants';
+import constants from '../constants';
+import * as actions from '../actions';
 
 const styles = theme => ({
   appBar: {
-    marginLeft: sidebarWidth,
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${sidebarWidth}px)`,
+    marginLeft: constants.sidebarWidth,
+    [theme.breakpoints.up('md')]: {
+      width: `calc(100% - ${constants.sidebarWidth}px)`,
     },
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
 });
 
+const mapStateToProps = state => {
+  return {
+    isMobileSidebarOpen: state.UIState.isMobileSidebarOpen,
+    title: state.pages.title,
+  };
+};
+
+const actionCreators = {
+  changeVisibleMobileSidebar: actions.changeVisibleMobileSidebar,
+};
+
 class ApplicationBar extends React.Component {
+  handleDrawerToggle = () => {
+    const { isMobileSidebarOpen, changeVisibleMobileSidebar } = this.props;
+    changeVisibleMobileSidebar({ isOpen: !isMobileSidebarOpen });
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, title } = this.props;
     return (
       <>
         <CssBaseline />
@@ -42,7 +59,7 @@ class ApplicationBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Responsive drawer
+              {title}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -51,4 +68,8 @@ class ApplicationBar extends React.Component {
   }
 }
 
-export default withStyles(styles)(ApplicationBar);
+const wStyles = withStyles(styles)(ApplicationBar);
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(wStyles);

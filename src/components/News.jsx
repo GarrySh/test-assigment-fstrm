@@ -29,12 +29,12 @@ const Main = ({ classes, children }) => (
 const mapStateToProps = (state, ownProps) => {
   const currentPage = ownProps.match.params.id || 1;
   return {
-    articles: state.articles,
+    articles: state.articles.data,
     articlesFetchingState: state.articlesFetchingState,
     articlesOnPage: state.pages.articlesOnPage,
     currentPage,
-    totalArticles: state.pages.totalArticles,
-    filterDate: state.UIState.filterDate,
+    totalArticles: state.articles.totalArticles,
+    filterDate: state.pages.filterDate,
   };
 };
 
@@ -71,7 +71,7 @@ class News extends React.Component {
     if (articlesFetchingState === 'failure') {
       return (
         <Main classes={classes}>
-          <Typography paragraph variant="h4" component="h1">
+          <Typography gutterBottom variant="h4" component="h1">
             Что-то пошло не так, попробуйте обновить страницу
           </Typography>
         </Main>

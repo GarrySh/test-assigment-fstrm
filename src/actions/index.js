@@ -3,10 +3,15 @@ import { createAction } from 'redux-actions';
 import { uniqueId } from 'lodash';
 import routes from '../routes';
 
+export const openModal = createAction('MODAL_OPEN');
+export const closeModal = createAction('MODAL_CLOSE')
+
+export const changeTitle = createAction('TITLE_CHANGE');
 export const changeTheme = createAction('THEME_CHANGE');
 export const changeFontSize = createAction('FONT_SIZE_CHANGE');
 export const changeFilterDate = createAction('FILTER_DATE_CHANGE');
 export const changeArticlesCountOnPage = createAction('ARTICLES_COUNT_ON_PAGE_CHANGE');
+export const changeVisibleMobileSidebar = createAction('MOBILE_SIDEBAR_VISIBLE_CHANGE')
 
 export const fetchArticlesRequest = createAction('ARTICLES_FETCH_REQUEST');
 export const fetchArticlesSuccess = createAction('ARTICLES_FETCH_SUCCESS');

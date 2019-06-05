@@ -14,7 +14,7 @@ const styles = theme => ({
 
 const mapStateToProps = state => {
   return {
-    filterDate: state.UIState.filterDate,
+    filterDate: state.pages.filterDate,
   };
 };
 

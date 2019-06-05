@@ -9,15 +9,15 @@ const styles = theme => {
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-  }
+  };
 };
 
 const Help = ({ classes }) => {
   return (
     <main className={classes.content}>
       <div className={classes.toolbar} />
-      <Typography paragraph variant="h4" component="h1">
-          Help
+      <Typography gutterBottom variant="h4" component="h1">
+        Help
       </Typography>
       <Typography paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut

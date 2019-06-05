@@ -20,10 +20,14 @@ const articlesFetchingState = handleActions(
 const articles = handleActions(
   {
     [actions.fetchArticlesSuccess](state, { payload }) {
-      return [...payload.articles];
+      const { articles: newArticles, totalResults } = payload;
+      return {
+        data: newArticles,
+        totalArticles: totalResults,
+      };
     },
   },
-  []
+  { data: [], totalArticles: 0 }
 );
 
 const pages = handleActions(
@@ -35,15 +39,22 @@ const pages = handleActions(
         articlesOnPage: Number(articlesOnPage),
       };
     },
-    [actions.fetchArticlesSuccess](state, { payload }) {
-      const { totalResults } = payload;
+    [actions.changeFilterDate](state, { payload }) {
+      const { filterDate } = payload;
       return {
         ...state,
-        totalArticles: totalResults,
+        filterDate,
+      };
+    },
+    [actions.changeTitle](state, { payload }) {
+      const { title } = payload;
+      return {
+        ...state,
+        title,
       };
     },
   },
-  { totalArticles: 0, articlesOnPage: 5 }
+  { articlesOnPage: 5, filterDate: '', title: '' }
 );
 
 const UIState = handleActions(
@@ -69,15 +80,33 @@ const UIState = handleActions(
         articlesCountOnPage,
       };
     },
-    [actions.changeFilterDate](state, { payload }) {
-      const { filterDate } = payload;
+
+    [actions.changeVisibleMobileSidebar](state, { payload }) {
+      const { isOpen } = payload;
       return {
         ...state,
-        filterDate,
+        isMobileSidebarOpen: isOpen,
+      };
+    },
+
+    [actions.openModal](state, { payload }) {
+      const { imgUrl } = payload;
+      return {
+        ...state,
+        isModalOpen: true,
+        modalImgUrl: imgUrl,
+      };
+    },
+
+    [actions.closeModal](state) {
+      return {
+        ...state,
+        isModalOpen: false,
+        modalImgUrl: '',
       };
     },
   },
-  { theme: 'primary', fontSize: 14, filterDate: '' }
+  { theme: 'primary', fontSize: 14, isMobileSidebarOpen: false, isModalOpen: false, modalImgUrl: '' }
 );
 
 export default combineReducers({

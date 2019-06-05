@@ -1,12 +1,12 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 
 const themes = {
   primary: {
+    type: 'dark',
     palette: {
-      primary: purple,
-      secondary: green,
+      primary: green,
     },
     status: {
       danger: 'orange',
@@ -14,8 +14,7 @@ const themes = {
   },
   secondary: {
     palette: {
-      primary: green,
-      secondary: purple,
+      primary: red,
     },
     status: {
       danger: 'orange',

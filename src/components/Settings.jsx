@@ -52,7 +52,7 @@ const actionCreators = {
   changeArticlesCountOnPage: actions.changeArticlesCountOnPage,
 };
 
-class Sidebar extends React.Component {
+class Settings extends React.Component {
   handleSliderChange = (event, value) => {
     const { changeFontSize } = this.props;
     changeFontSize({ fontSize: value });
@@ -126,7 +126,7 @@ class Sidebar extends React.Component {
   }
 }
 
-const wStyles = withStyles(styles)(Sidebar);
+const wStyles = withStyles(styles)(Settings);
 export default connect(
   mapStateToProps,
   actionCreators

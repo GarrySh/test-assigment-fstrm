@@ -41,7 +41,7 @@ const AboutUs = ({ classes }) => {
   return (
     <main className={classes.content}>
       <div className={classes.toolbar} />
-      <Typography variant="h4" component="h1" className={styles.header}>
+      <Typography gutterBottom variant="h4" component="h1" className={styles.header}>
         About us
       </Typography>
       <Map className={classes.map} center={position} zoom={13}>

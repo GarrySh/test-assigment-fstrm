@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -12,20 +13,31 @@ import HelpIcon from '@material-ui/icons/Help';
 import Settings from '@material-ui/icons/Settings';
 import Computer from '@material-ui/icons/Computer';
 import { Link as RouterLink } from 'react-router-dom';
-import { sidebarWidth } from '../constants';
+import constants from '../constants';
+import * as actions from '../actions';
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: sidebarWidth,
+    [theme.breakpoints.up('md')]: {
+      width: constants.sidebarWidth,
       flexShrink: 0,
     },
   },
   drawerPaper: {
-    width: sidebarWidth,
+    width: constants.sidebarWidth,
   },
 });
+
+const mapStateToProps = state => {
+  return {
+    isMobileSidebarOpen: state.UIState.isMobileSidebarOpen,
+  }
+};
+
+const actionCreators = {
+  changeVisibleMobileSidebar: actions.changeVisibleMobileSidebar,
+}
 
 const CustomItem = props => {
   const { to, text, children } = props;
@@ -38,6 +50,11 @@ const CustomItem = props => {
 };
 
 class Sidebar extends React.Component {
+  handleDrawerToggle = () => {
+    const { isMobileSidebarOpen, changeVisibleMobileSidebar } = this.props;
+    changeVisibleMobileSidebar({ isOpen: !isMobileSidebarOpen });
+  }
+
   renderDrawer() {
     const { classes } = this.props;
     return (
@@ -66,14 +83,14 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, isMobileSidebarOpen } = this.props;
     return (
       <nav className={classes.drawer}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
+        <Hidden mdUp implementation="css">
           <Drawer
             variant="temporary"
-            open={false} // open={mobileOpen}
+            open={isMobileSidebarOpen}
             onClose={this.handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
@@ -85,7 +102,7 @@ class Sidebar extends React.Component {
             {this.renderDrawer()}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
           <Drawer
             classes={{
               paper: classes.drawerPaper,
@@ -101,4 +118,8 @@ class Sidebar extends React.Component {
   }
 }
 
-export default withStyles(styles)(Sidebar);
+const wStyles = withStyles(styles)(Sidebar);
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(wStyles);

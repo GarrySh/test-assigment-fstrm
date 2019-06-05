@@ -7,6 +7,7 @@ import AboutUs from './AboutUs';
 import News from './News';
 import Settings from './Settings';
 import Help from './Help';
+import Article from './Article';
 import getTheme from '../themes';
 
 const mapStateToProps = state => {
@@ -25,6 +26,7 @@ const App = ({ fontSize, currentTheme }) => {
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/articles/1" />} />
             <Route path="/articles/:id" component={News} />
+            <Route path="/article/:id" component={Article} />
             <Route path="/about" component={AboutUs} />
             <Route path="/help" component={Help} />
             <Route path="/settings" component={Settings} />
